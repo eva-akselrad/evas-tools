@@ -1,0 +1,32 @@
+{
+  "name": "shutdown-app",
+  "version": "1.0.0",
+  "description": "JARVIS-style shutdown server with futuristic UI and extensible command system",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc && npm run copy-ui",
+    "copy-ui": "node -e \"const fs = require('fs'); const path = require('path'); const src = path.join(process.cwd(), 'src', 'ui'); const dest = path.join(process.cwd(), 'dist', 'ui'); if(fs.existsSync(src)) { fs.cpSync(src, dest, {recursive: true, force: true}); console.log('UI files copied to dist/ui'); }\"",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "@hono/node-server": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0"
+  },
+  "keywords": [
+    "shutdown",
+    "server",
+    "hono",
+    "jarvis",
+    "futuristic-ui"
+  ],
+  "author": "eva-akselrad",
+  "license": "MIT"
+}

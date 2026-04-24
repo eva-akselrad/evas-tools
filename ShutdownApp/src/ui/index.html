@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System Control Dashboard</title>
+    <link rel="stylesheet" href="/ui/style.css?v=1.1.0" />
+  </head>
+  <body>
+    <!-- Background elements for liquid glass effect -->
+    <div class="background-mesh"></div>
+    <div class="glass-overlay"></div>
+
+    <div class="container">
+      <!-- Header -->
+      <header class="header glass">
+        <div class="title-wrapper">
+          <h1 class="title">System Node</h1>
+          <p class="subtitle">Cloudflare Secured Interface</p>
+        </div>
+        <div class="status-indicator">
+          <div class="pulse"></div>
+          <span class="status-text">ONLINE</span>
+        </div>
+      </header>
+
+      <!-- Status Panel -->
+      <section class="status-panel glass">
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Hostname</span>
+            <span class="info-value" id="hostname">--</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Uptime</span>
+            <span class="info-value" id="uptime">--</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Architecture</span>
+            <span class="info-value" id="cpus">--</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Memory Usage</span>
+            <span class="info-value" id="memory">--</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Commands Grid -->
+      <section class="commands-section">
+        <h2 class="section-title">Control Commands</h2>
+        <div class="commands-grid" id="commandsGrid">
+          <!-- Commands will be loaded here -->
+        </div>
+      </section>
+
+      <!-- Command Feedback -->
+      <section class="feedback-section glass" id="feedbackSection" style="display: none">
+        <div class="feedback-content">
+          <div class="feedback-icon" id="feedbackIcon"></div>
+          <div class="feedback-text">
+            <p id="feedbackMessage"></p>
+            <p class="feedback-time" id="feedbackTime"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>Terminal v1.1.0 • Access Verified</p>
+      </footer>
+    </div>
+
+    <script src="/ui/script.js?v=1.1.0"></script>
+  </body>
+</html>
