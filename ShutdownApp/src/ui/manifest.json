@@ -1,0 +1,22 @@
+{
+  "name": "System Node Control",
+  "short_name": "SystemNode",
+  "description": "Futuristic System Control and Torrent Search Interface",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/1154/1154215.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/192/1154/1154215.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

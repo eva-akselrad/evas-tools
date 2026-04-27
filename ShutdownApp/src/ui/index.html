@@ -4,12 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>System Control Dashboard</title>
-    <link rel="stylesheet" href="/ui/style.css?v=1.1.0" />
-  </head>
-  <body>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#050505" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1154/1154215.png" />
+    <link rel="stylesheet" href="/ui/style.css?v=1.2.0" />
+    </head>
+    <body>
     <!-- Background elements for liquid glass effect -->
     <div class="background-mesh"></div>
     <div class="glass-overlay"></div>
+    <canvas id="hacker-canvas"></canvas>
+
 
     <div class="container">
       <!-- Header -->
@@ -24,35 +31,90 @@
         </div>
       </header>
 
-      <!-- Status Panel -->
-      <section class="status-panel glass">
-        <div class="info-grid">
-          <div class="info-item">
-            <span class="info-label">Hostname</span>
-            <span class="info-value" id="hostname">--</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Uptime</span>
-            <span class="info-value" id="uptime">--</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Architecture</span>
-            <span class="info-value" id="cpus">--</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Memory Usage</span>
-            <span class="info-value" id="memory">--</span>
-          </div>
-        </div>
-      </section>
+      <!-- Navigation Tabs -->
+      <nav class="tabs glass">
+        <button class="tab-btn active" data-tab="torrents">Torrent Search</button>
+        <button class="tab-btn" data-tab="system">System Control</button>
+      </nav>
 
-      <!-- Commands Grid -->
-      <section class="commands-section">
-        <h2 class="section-title">Control Commands</h2>
-        <div class="commands-grid" id="commandsGrid">
-          <!-- Commands will be loaded here -->
+      <!-- Torrent Search Tab -->
+      <div id="torrents-tab" class="tab-content active">
+        <section class="search-section glass">
+          <div class="search-controls">
+            <input type="text" id="searchInput" placeholder="Search for movies, TV shows..." class="glass-input">
+            <select id="categorySelect" class="glass-select">
+              <option value="movies">Movies</option>
+              <option value="tvshows">TV Shows</option>
+              <option value="others">Others</option>
+            </select>
+            <button id="searchBtn" class="glass-btn">Search</button>
+          </div>
+        </section>
+
+        <section class="results-section">
+          <div id="resultsList" class="results-grid">
+            <!-- Search results will appear here -->
+            <div class="empty-state">Enter a query to search via Jackett</div>
+          </div>
+        </section>
+      </div>
+
+      <!-- System Control Tab -->
+      <div id="system-tab" class="tab-content">
+        <div id="system-lock-overlay" class="lock-overlay glass">
+          <div class="lock-content">
+            <span class="lock-icon">🔒</span>
+            <h3>System Access Restricted</h3>
+            <p>Enter password to unlock system controls.</p>
+            <button id="unlockSystemBtn" class="glass-btn">Unlock Controls</button>
+          </div>
         </div>
-      </section>
+        
+        <div id="system-controls-content" style="display: none;">
+          <!-- Status Panel -->
+          <section class="status-panel glass">
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Hostname</span>
+                <span class="info-value" id="hostname">--</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Uptime</span>
+                <span class="info-value" id="uptime">--</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Architecture</span>
+                <span class="info-value" id="cpus">--</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Memory Usage</span>
+                <span class="info-value" id="memory">--</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Commands Grid -->
+          <section class="commands-section">
+            <h2 class="section-title">Control Commands</h2>
+            <div class="commands-grid" id="commandsGrid">
+              <!-- Commands will be loaded here -->
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Password Modal -->
+      <div id="passwordModal" class="modal">
+        <div class="modal-content glass">
+          <h3>Authorization Required</h3>
+          <p>Please enter the system password to proceed.</p>
+          <input type="password" id="systemPassword" placeholder="Password" class="glass-input">
+          <div class="modal-actions">
+            <button id="cancelBtn" class="glass-btn secondary">Cancel</button>
+            <button id="confirmBtn" class="glass-btn">Confirm</button>
+          </div>
+        </div>
+      </div>
 
       <!-- Command Feedback -->
       <section class="feedback-section glass" id="feedbackSection" style="display: none">
@@ -67,10 +129,10 @@
 
       <!-- Footer -->
       <footer class="footer">
-        <p>Terminal v1.1.0 • Access Verified</p>
+        <p>Terminal v1.2.0 • Access Verified</p>
       </footer>
     </div>
 
-    <script src="/ui/script.js?v=1.1.0"></script>
+    <script src="/ui/script.js?v=1.2.0"></script>
   </body>
 </html>

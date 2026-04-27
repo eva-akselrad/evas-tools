@@ -13,6 +13,14 @@ export class ShutdownCommand extends BaseCommand {
 
   async execute(args?: Record<string, unknown>): Promise<CommandResult> {
     try {
+      const password = args?.password as string;
+      if (!process.env.SYSTEM_PASSWORD || password !== process.env.SYSTEM_PASSWORD) {
+        return {
+          success: false,
+          message: "Unauthorized: Invalid system password",
+        };
+      }
+
       const delay = (args?.delay as number) || 0;
 
       if (delay > 0) {

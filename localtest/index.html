@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P5_Fluid_Core - Richboro, PA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        #hud {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 12px 16px;
+            background-color: rgba(0, 0, 0, 0.75);
+            border-left: 3px solid #00ff41;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #00ff41;
+            z-index: 1000;
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        #hud pre {
+            white-space: pre;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div id="hud">
+        <pre>
+> SYS_ACTIVE // RICHBORO, PA
+> TIMESTAMP: SUN APR 26 2026 // 18:00 EDT
+> ENGINE: P5_FLUID_CORE
+        </pre>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <script>
+        let particles = [];
+        let isMouseDown = false;
+        let mousePos = { x: 0, y: 0 };
+
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            noStroke();
+            textAlign(LEFT, TOP);
+        }
+
+        function draw() {
+            background(0);
+            
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i];
+                p.update();
+                p.show();
+                
+                if (p.offScreen()) {
+                    particles.splice(i, 1);
+                }
+            }
+        }
+
+        function windowResized() {
+            resizeCanvas(windowWidth, windowHeight);
+        }
+
+        function mousePressed() {
+            isMouseDown = true;
+            mousePos.x = mouseX;
+            mousePos.y = mouseY;
+        }
+
+        function mouseReleased() {
+            isMouseDown = false;
+        }
+
+        function mouseDragged() {
+            if (isMouseDown) {
+                spawnParticle(mouseX, mouseY);
+            }
+        }
+
+        function spawnParticle(x, y) {
+            let speed = random(3, 8);
+            let angle = random(TWO_PI);
+            
+            particles.push({
+                x: x,
+                y: y,
+                vx: cos(angle) * speed,
+                vy: sin(angle) * speed,
+                size: random(4, 10),
+                hue: random(CYAN, HOT_PINK),
+                age: 0
+            });
+        }
+
+        function particleUpdate(p) {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.15; // gravity
+            
+            // Edge collision
+            if (p.x < 0 || p.x > width) {
+                p.vx *= -0.8;
+                p.x = constrain(p.x, 0, width);
+            }
+            if (p.y < 0 || p.y > height) {
+                p.vy *= -0.8;
+                p.y = constrain(p.y, 0, height);
+            }
+            
+            // Slow down over time
+            p.vx *= 0.995;
+            p.vy *= 0.995;
+        }
+
+        function particleShow(p) {
+            let ctx = drawingContext;
+            
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = color(p.hue);
+            ctx.fillStyle = color(p.hue);
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, TWO_PI);
+            ctx.fill();
+            
+            ctx.shadowBlur = 0;
+        }
+
+        function particleOffScreen(p) {
+            return p.x < -50 || p.x > width + 50 || 
+                   p.y < -50 || p.y > height + 50 ||
+                   p.size < 1;
+        }
+    </script>
+</body>
+</html>
